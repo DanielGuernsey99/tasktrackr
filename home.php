@@ -19,155 +19,141 @@ if (isset($_SESSION['user_id'])) {
         }
         * {
             font-family: 'BitendDemo-Regular';
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f4f4f4;
+            font-size: 16px;
+            line-height: 1.5;
         }
         .header {
             width: 100%;
-            background-color: black;
+            background-color: #333;
             color: white;
-            margin: 0px;
             display: flex;
-            text-align: center;
             justify-content: center;
             align-items: center;
-            font-size: 15px;
+            padding: 15px 0;
         }
         .header h1 {
-            margin: 0px;
-        }
-        body {
-            margin: 0px;
+            font-size: 24px;
+            margin: 0;
         }
         .container {
-            height: 1119px;
-            width: 100%;
+            display: flex;
+            height: calc(100vh - 150px); /* Match the sizing used in calendar and members */
         }
         .leftNav {
-            height: 100%;
-            width: 150px;
-            background-color: #989898;
-            border: 1px solid black;
-            float: left;
+            width: 200px;
+            background-color: #2c2c2c;
+            color: white;
+            padding: 15px;
         }
         .leftNav a {
             display: block;
-            padding-left: 5px;
-            margin-bottom: 7px;
-            margin-top: 7px;
+            padding: 10px;
+            margin-bottom: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
-        .bottomNav {
-            display: flex;
-            justify-content: center;
-            border-top: 1px solid black;
-            margin: 0px;
+        .leftNav a:hover {
+            background-color: #444;
         }
         .mainContent {
-            height: 100%;
-            margin-top: 0px;
-            background-color: #BEBEBE;
+            flex: 1;
+            background-color: #fff;
+            padding: 20px; /* Ensure padding matches other pages */
+            overflow-y: auto;
         }
         .footer {
-            background-color: black;
+            background-color: #333;
             color: white;
-            height: 50px;
-            margin: 0px;
+            text-align: center;
+            padding: 15px;
         }
         .footer h1 {
-            height: 100%;
-            margin: 0px;
-            display: flex;
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
+            margin: 0;
         }
-        .middleNav {
-            display: flex;
-            justify-content: center;
-            border-top: 1px solid black;
-        }
-        .topNav {
-            display: flex;
-            justify-content: center;
-            border-top: 1px solid black;
-        }
-        .profileNav {
-			padding-left:45px;
-        }
-        .profileNav p{
-			padding-left:5px;
-        }
-        .mainContentHeader {
-            margin: 0px;
-            display: flex;
-            justify-content: center;
-            padding-top: 25px;
+        .profileNav p {
+            font-weight: bold;
+            margin-bottom: 20px;
         }
         .mainContentHeader h1 {
-            margin: 0px;
+            font-size: 28px;
+            margin-bottom: 20px;
         }
-        .task-list {
-            margin-top: 20px;
-            padding-left: 10px;
+        .task-form input, .task-form textarea, .task-form button {
+            margin: 5px 0; /* Match with input styling from other pages */
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
-        .task-item {
-            margin: 5px 0;
-        }
-        .task-form input,
-        .task-form select,
         .task-form button {
-            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border: none;
         }
-        .complete-button {
-            background-color: green;
+        .task-form button:hover {
+            background-color: #45a049;
+        }
+        .tasksDisplay {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .task-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            width: 250px; /* Adjust for consistency */
+            padding: 20px;
+            margin: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .task-card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .task-card p {
+            color: #666;
+        }
+        .task-card .due-date {
+            font-size: 0.9em;
+            color: #888;
+        }
+        .task-card .complete-button {
+            background-color: #4CAF50;
             color: white;
             border: none;
-            padding: 5px 10px;
+            padding: 8px 15px;
             cursor: pointer;
-        }
-        .complete-button:hover {
-            background-color: darkgreen;
-        }
-        .mainContent {
+            width: 100%;
+            border-radius: 5px;
             text-align: center;
         }
-		.tasksDisplay{
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: center;
-			padding: 20px;
-		}
-		.task-card {
-			background-color: #f4f4f4;
-			border-radius: 8px;
-			width: 250px;
-			padding: 20px;
-			margin: 15px;
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-		}
-		.task-card h3 {
-			margin-top: 0;
-			color: #333;
-		}
-		.task-card p {
-			color: #666;
-		}
-		.task-card .due-date {
-			font-size: 0.9em;
-			color: #888;
-		}
-		.task-card .complete-button {
-			background-color: #4CAF50;
-			color: white;
-			border: none;
-			padding: 8px 15px;
-			cursor: pointer;
-			width: 100%;
-			border-radius: 5px;
-			text-align: center;
-		}
-		.task-card .complete-button:hover {
-			background-color: #45a049;
-		}
+        .task-card .complete-button:hover {
+            background-color: #45a049;
+        }
+        .task-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .task-card.overdue {
+            background-color: #ffdddd;
+            border: 2px solid #ff4444;
+        }
+        .profileNav {
+            border-bottom: 1px solid black;
+        }
     </style>
 </head>
 <body>
@@ -188,16 +174,16 @@ if (isset($_SESSION['user_id'])) {
                     }
                     ?>
                 </p>
-				<a href="login/logout.php">Logout</a>
+                <a href="login/logout.php">Logout</a>
             </div>
             <div class="topNav">
-                <a href="home.php"><u>Home</u></a>
+                <a href="home.php">Home</a>
             </div>
             <div class="middleNav">
-                <a href="Calendar.php"><u>Calendar</u></a>
+                <a href="Calendar.php">Calendar</a>
             </div>
             <div class="bottomNav">
-                <a href="Members.php"><u>Members</u></a>
+                <a href="Members.php">Members</a>
             </div>
         </div>
 
@@ -242,19 +228,6 @@ if (isset($_SESSION['user_id'])) {
                 }
             }
 
-            // Mark Task as Completed
-            if (isset($_POST['complete_task'])) {
-                $task_id = $_POST['task_id'];
-
-                // Update the task status to completed
-                $sql = "UPDATE tasks SET is_completed = 1 WHERE id = $task_id";
-                if ($conn->query($sql) === TRUE) {
-                    echo "Task marked as completed!";
-                } else {
-                    echo "Error: " . $conn->error;
-                }
-            }
-
             // Fetch Tasks (Only tasks that are not completed)
             $sql = "SELECT id, task_name, task_description, task_date FROM tasks WHERE is_completed = 0 ORDER BY task_date";
             $result = $conn->query($sql);
@@ -263,14 +236,20 @@ if (isset($_SESSION['user_id'])) {
                 echo "<div class='tasksDisplay'>";  // Start tasksDisplay container
                 while ($row = $result->fetch_assoc()) {
                     // Directly display the date (no time zone conversion needed)
-                    $formatted_date = $row['task_date'];  // Since it's already in the correct format
+                    $formatted_date = $row['task_date'];
 
-                    echo "<div class='task-card'>";
+                    // Check if the task is overdue
+                    $current_date = date('Y-m-d');  // Get today's date in 'Y-m-d' format
+                    $is_overdue = ($formatted_date < $current_date); // Compare the dates
+
+                    // Add a class 'overdue' if the task is overdue
+                    $overdue_class = $is_overdue ? 'overdue' : '';
+
+                    echo "<div class='task-card $overdue_class'>";
                     echo "<h3>" . htmlspecialchars($row['task_name']) . "</h3>";
                     echo "<p>" . htmlspecialchars($row['task_description']) . "</p>";
                     echo "<p class='due-date'>Due: " . $formatted_date . "</p>";
 
-                    // Complete button for each task
                     echo "<form method='POST'>
                             <input type='hidden' name='task_id' value='" . $row['id'] . "'>
                             <button type='submit' name='complete_task' class='complete-button'>Complete</button>
@@ -280,7 +259,6 @@ if (isset($_SESSION['user_id'])) {
                 }
                 echo "</div>";  // End tasksDisplay container
             } else {
-                // No tasks found, truncate the table
                 echo "<p>No tasks found!</p>";
             }
 

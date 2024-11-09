@@ -30,6 +30,7 @@ if (isset($_SESSION['user_id'])) {
 
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,165 +41,144 @@ $conn->close();
         }
         * {
             font-family: 'BitendDemo-Regular';
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f4f4f4;
+            font-size: 16px;
+            line-height: 1.5;
         }
         .header {
             width: 100%;
-            background-color: black;
+            background-color: #333;
             color: white;
-            margin: 0px;
             display: flex;
-            text-align: center;
             justify-content: center;
             align-items: center;
-            font-size: 15px;
+            padding: 15px 0;
         }
         .header h1 {
-            margin: 0px;
-        }
-        body {
-            margin: 0px;
+            font-size: 24px;
         }
         .container {
-            height: 1119px;
-            width: 100%;
+            display: flex;
+            height: calc(100vh - 150px);
         }
         .leftNav {
-            height: 100%;
-            width: 150px;
-            background-color: #989898;
-            border: 1px solid black;
-            float: left;
+            width: 200px;
+            background-color: #2c2c2c;
+            color: white;
+            padding: 15px;
         }
         .leftNav a {
             display: block;
-            padding-left: 5px;
-            margin-bottom: 7px;
-            margin-top: 7px;
+            padding: 10px;
+            margin-bottom: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
-        .bottomNav {
-			display: flex;
-            justify-content: center;
-            border-top: 1px solid black;
-            margin: 0px;
+        .leftNav a:hover {
+            background-color: #444;
         }
         .mainContent {
-            height: 100%;
-            margin-top: 0px;
-            background-color: #BEBEBE;
+            flex: 1;
+            background-color: #fff;
+            padding: 20px;
+            overflow-y: auto;
         }
         .footer {
-            background-color: black;
+            background-color: #333;
             color: white;
-            height: 50px;
-            margin: 0px;
-        }
-        .footer h1 {
-            height: 100%;
-            margin: 0px;
-            display: flex;
             text-align: center;
-            justify-content: center;
+            padding: 15px;
+        }
+        .calendar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            font-size: 20px;
+            margin-bottom: 20px;
         }
-        .middleNav {
-            display: flex;
-            justify-content: center;
-            border-top: 1px solid black;
+        .calendar-header a {
+            padding: 8px 16px;
+            background-color: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
-        .topNav {
-            display: flex;
-            justify-content: center;
-            border-top: 1px solid black;
-        }
-        .profileNav {
-			padding-left:45px;
-        }
-        .profileNav p{
-			padding-left:5px;
+        .calendar-header a:hover {
+            background-color: #ddd;
         }
         .calendar {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 10px;
-            margin-top: 20px;
-            border: 1px solid black;
-            background-color: #989898;
+            background-color: #eee;
+            padding: 20px;
+            border-radius: 5px;
         }
         .calendar-day {
-            padding: 10px;
+            padding: 15px;
             text-align: center;
-            border: 1px solid #ccc;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .calendar-day:hover {
+            background-color: #f5f5f5;
+            transform: scale(1.05);
         }
         .calendar-day-header {
             font-weight: bold;
+            color: #444;
         }
-        .calendar-header {
-            padding-top: 25px;
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
+        .calendar-day span.task-name {
+            display: block;
+            margin-top: 5px;
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
         }
-        .calendar-header a {
-            font-size: 18px;
-            text-decoration: none;
-            color: black;
-            background-color: #f0f0f0;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-        .calendar-header a:hover {
-            background-color: #ccc;
-        }
-        .task-completed {
-            text-decoration: line-through;
-            color: gray;
+        .calendar-day span.task-name:hover {
+            text-decoration: underline;
         }
         .task-details {
-            margin-top: 20px;
+            background-color: #f9f9f9;
             padding: 15px;
-            background-color: #e0e0e0;
             border-radius: 5px;
+            margin-top: 20px;
         }
         .task-details h3 {
             margin-top: 0;
+            font-size: 20px;
         }
+        .task-details p {
+            margin: 5px 0;
+        }
+        .task-completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .profileNav p {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+		.profileNav{
+			border-bottom:1px solid black;
+		}
     </style>
-    <script>
-        // Function to toggle the task description below the calendar when a task is clicked
-        function showTaskDetails(taskId) {
-            console.log("Task ID clicked:", taskId); // Debugging
-
-            // Hide any other open task details
-            const allTaskDetails = document.querySelectorAll('.task-details');
-            allTaskDetails.forEach(detail => {
-                detail.style.display = "none";
-            });
-
-            // Fetch the task details using AJAX
-            fetch('fetch_task_details.php?id=' + taskId)
-                .then(response => response.json())
-                .then(data => {
-                    if (data) {
-                        // Create or update the task details container
-                        const taskDetailsHTML = `
-                            <div class="task-details" id="task-details-${taskId}" style="display: block;">
-                                <h3>${data.task_name}</h3>
-                                <p><strong>Description:</strong> ${data.task_description}</p>
-                                <p><strong>Due Date:</strong> ${data.task_date}</p>
-                                <p><strong>Status:</strong> ${data.is_completed ? "Completed" : "Not Completed"}</p>
-                            </div>
-                        `;
-
-                        // Insert the task details below the calendar
-                        const taskDetailsDiv = document.getElementById('task-details-container');
-                        taskDetailsDiv.innerHTML = taskDetailsHTML;
-                    }
-                })
-                .catch(error => console.error('Error fetching task details:', error));
-        }
-    </script>
 </head>
 <body>
     <div class="header">
@@ -209,21 +189,21 @@ $conn->close();
         <div class="leftNav">
             <div class="profileNav">
                 <p><?php echo htmlspecialchars($username); ?></p>
-				<a href="login/logout.php">Logout</a>
+                <a href="login/logout.php">Logout</a>
             </div>
             <div class="topNav">
-                <a href="http://localhost/tasktrackr/home.php"><u>Home</u></a>
+                <a href="home.php">Home</a>
             </div>
             <div class="middleNav">
-                <a href="http://localhost/tasktrackr/Calendar.php"><u>Calendar</u></a>
+                <a href="Calendar.php">Calendar</a>
             </div>
             <div class="bottomNav">
-                <a href="http://localhost/tasktrackr/Members.php"><u>Members</u></a>
+                <a href="Members.php">Members</a>
             </div>
         </div>
 
         <div class="mainContent">
-            <div class="calendarContainer">
+            <div class="calendar-container">
                 <?php
                 // Fetch tasks for the current month that are not completed
                 $conn = new mysqli("localhost", "root", "", "tasktrackr");
@@ -232,15 +212,10 @@ $conn->close();
                     die("Connection failed: " . $conn->connect_error);
                 }
 
-                // Get the current month and year, or navigate through GET parameters
                 $month = isset($_GET['month']) ? $_GET['month'] : date("m");
                 $year = isset($_GET['year']) ? $_GET['year'] : date("Y");
 
-                // Get the month and year for the navigation links
-                $currentMonth = date("Y-m", strtotime("$year-$month-01"));
-
-                // Fetch tasks for the current month that are not completed
-                $sql = "SELECT * FROM tasks WHERE task_date LIKE '$currentMonth%' AND is_completed = 0 ORDER BY task_date";
+                $sql = "SELECT * FROM tasks WHERE task_date LIKE '$year-$month%' AND is_completed = 0 ORDER BY task_date";
                 $result = $conn->query($sql);
 
                 $tasks_by_date = [];
@@ -261,28 +236,23 @@ $conn->close();
                 <!-- Calendar Grid -->
                 <div class="calendar">
                     <?php
-                    // Display the days of the week headers
                     $daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
                     foreach ($daysOfWeek as $day) {
                         echo "<div class='calendar-day calendar-day-header'>$day</div>";
                     }
 
-                    // Get the number of days in the current month
                     $daysInMonth = date("t", strtotime("$year-$month-01"));
                     $startDay = date("w", strtotime("$year-$month-01"));
                     $currentDay = 1;
 
-                    // Create empty cells before the first day of the month
                     for ($i = 0; $i < $startDay; $i++) {
                         echo "<div class='calendar-day'></div>";
                     }
 
-                    // Loop through each day in the month
                     for ($day = 1; $day <= $daysInMonth; $day++) {
                         $dateString = "$year-$month-" . str_pad($day, 2, "0", STR_PAD_LEFT);
                         echo "<div class='calendar-day' onclick='showTaskDetails(\"$dateString\")'>$day";
 
-                        // Check if there are any tasks for this day
                         if (isset($tasks_by_date[$dateString])) {
                             foreach ($tasks_by_date[$dateString] as $task) {
                                 $taskName = $task['task_name'];
@@ -298,7 +268,7 @@ $conn->close();
             </div>
 
             <!-- Task Details Section (Below the Calendar) -->
-            <div id="task-details-container" style="margin-top: 20px;"></div>
+            <div id="task-details-container"></div>
 
         </div>
     </div>
@@ -306,5 +276,34 @@ $conn->close();
     <div class="footer">
         <h1>© Copyright 2024 by tasktrackr</h1>
     </div>
+
+    <script>
+        function showTaskDetails(taskId) {
+            console.log("Task ID clicked:", taskId); // Debugging
+
+            const allTaskDetails = document.querySelectorAll('.task-details');
+            allTaskDetails.forEach(detail => {
+                detail.style.display = "none";
+            });
+
+            fetch('fetch_task_details.php?id=' + taskId)
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        const taskDetailsHTML = `
+                            <div class="task-details" id="task-details-${taskId}" style="display: block;">
+                                <h3>${data.task_name}</h3>
+                                <p><strong>Description:</strong> ${data.task_description}</p>
+                                <p><strong>Due Date:</strong> ${data.task_date}</p>
+                                <p><strong>Status:</strong> ${data.is_completed ? "Completed" : "Not Completed"}</p>
+                            </div>
+                        `;
+                        const taskDetailsDiv = document.getElementById('task-details-container');
+                        taskDetailsDiv.innerHTML = taskDetailsHTML;
+                    }
+                })
+                .catch(error => console.error('Error fetching task details:', error));
+        }
+    </script>
 </body>
 </html>

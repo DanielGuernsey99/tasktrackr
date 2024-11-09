@@ -59,36 +59,42 @@ if (isset($_POST['login'])) {
         }
         .header {
             width: 100%;
-            background-color: black;
+            background-color: #333;
             color: white;
             margin: 0;
             display: flex;
-            text-align: center;
             justify-content: center;
             align-items: center;
-            font-size: 15px;
+            padding: 15px 0;
         }
         .header h1 {
             margin: 0;
+            font-size: 24px;
         }
         body {
             margin: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
         }
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: calc(100vh - 50px); /* Adjusted for header and footer */
-            background-color: #BEBEBE;
+            flex: 1;
+            padding: 20px;
         }
         .loginForm {
-            background-color: #FFF;
+            background-color: #fff;
             padding: 20px;
-            border: 1px solid #CCC;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
         }
         .loginForm h2 {
             text-align: center;
@@ -97,36 +103,46 @@ if (isset($_POST['login'])) {
         .loginForm input[type="text"],
         .loginForm input[type="password"] {
             width: calc(100% - 20px);
-            padding: 8px;
+            padding: 10px;
             margin-bottom: 15px;
-            border: 1px solid #CCC;
-            border-radius: 4px;
-        }
-        /* Exclude password field from the custom font */
-        .loginForm input[type="password"] {
-            font-family: Arial, sans-serif; /* Default font for password */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
         }
         .loginForm input[type="submit"] {
             width: 100%;
             padding: 10px;
             background-color: #333;
-            color: #FFF;
+            color: #fff;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
         .loginForm input[type="submit"]:hover {
             background-color: #555;
         }
+        .loginForm p {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .loginForm p a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .loginForm p a:hover {
+            text-decoration: underline;
+        }
         .footer {
-            background-color: black;
+            background-color: #333;
             color: white;
-            height: 50px;
-            margin: 0;
             display: flex;
-            align-items: center;
             justify-content: center;
-            font-size: 20px;
+            align-items: center;
+            height: 50px;
+            font-size: 16px;
         }
     </style>
 </head>
