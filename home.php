@@ -7,6 +7,46 @@ if (isset($_SESSION['user_id'])) {
 } else {
     $username = "Guest"; // Fallback if no user is logged in
 }
+
+// Database connection
+$conn = new mysqli("localhost", "root", "", "tasktrackr");
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Handle task completion (delete the task from the database)
+if (isset($_POST['complete_task'])) {
+    $task_id = $_POST['task_id'];
+
+    // Delete the task from the database
+    $delete_sql = "DELETE FROM tasks WHERE id = $task_id";
+    if ($conn->query($delete_sql) === TRUE) {
+        // Task deleted successfully, refresh the page
+        header("Location: home.php");  // Redirect to home.php to refresh the page
+        exit();  // Ensure no further code is executed
+    } else {
+        echo "Error: " . $conn->error;
+    }
+}
+
+// Create Task
+if (isset($_POST['submit_task'])) {
+    $task_name = $_POST['task_name'];
+    $task_description = $_POST['task_description'];
+    $task_date = $_POST['task_date'];
+
+    // Insert the task into the database (no timezone conversion needed)
+    $sql = "INSERT INTO tasks (task_name, task_description, task_date) VALUES ('$task_name', '$task_description', '$task_date')";
+    if ($conn->query($sql) === TRUE) {
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// Fetch Tasks (Only tasks that are not completed)
+$sql = "SELECT id, task_name, task_description, task_date FROM tasks WHERE is_completed = 0 ORDER BY task_date";
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -166,7 +206,6 @@ if (isset($_SESSION['user_id'])) {
             <div class="profileNav">
                 <p>
                     <?php
-                    // Check if the user is logged in and display the username
                     if (isset($_SESSION['username'])) {
                         echo htmlspecialchars($_SESSION['username']);
                     } else {
@@ -203,44 +242,15 @@ if (isset($_SESSION['user_id'])) {
             </div>
 
             <?php
-            // Set the default time zone to handle time zone discrepancies
-            date_default_timezone_set('America/New_York');  // Adjust to your desired time zone
-
-            // Database connection
-            $conn = new mysqli("localhost", "root", "", "tasktrackr");
-
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-
-            // Create Task
-            if (isset($_POST['submit_task'])) {
-                $task_name = $_POST['task_name'];
-                $task_description = $_POST['task_description'];
-                $task_date = $_POST['task_date'];
-
-                // Insert the task into the database (no timezone conversion needed)
-                $sql = "INSERT INTO tasks (task_name, task_description, task_date) VALUES ('$task_name', '$task_description', '$task_date')";
-                if ($conn->query($sql) === TRUE) {
-                    echo "Task created successfully!";
-                } else {
-                    echo "Error: " . $sql . "<br>" . $conn->error;
-                }
-            }
-
-            // Fetch Tasks (Only tasks that are not completed)
-            $sql = "SELECT id, task_name, task_description, task_date FROM tasks WHERE is_completed = 0 ORDER BY task_date";
-            $result = $conn->query($sql);
-
+            // Display tasks
             if ($result->num_rows > 0) {
                 echo "<div class='tasksDisplay'>";  // Start tasksDisplay container
                 while ($row = $result->fetch_assoc()) {
-                    // Directly display the date (no time zone conversion needed)
                     $formatted_date = $row['task_date'];
 
                     // Check if the task is overdue
                     $current_date = date('Y-m-d');  // Get today's date in 'Y-m-d' format
-                    $is_overdue = ($formatted_date < $current_date); // Compare the dates
+                    $is_overdue = ($formatted_date < $current_date);
 
                     // Add a class 'overdue' if the task is overdue
                     $overdue_class = $is_overdue ? 'overdue' : '';

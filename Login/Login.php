@@ -109,6 +109,9 @@ if (isset($_POST['login'])) {
             border-radius: 5px;
             font-size: 16px;
         }
+        .loginForm input[type="password"] {
+            font-family: Arial, sans-serif; /* Reset font for password field */
+        }
         .loginForm input[type="submit"] {
             width: 100%;
             padding: 10px;

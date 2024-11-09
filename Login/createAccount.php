@@ -120,6 +120,9 @@ $conn->close();
             border-radius: 5px;
             font-size: 16px;
         }
+        .loginForm input[type="password"] {
+            font-family: sans-serif, Arial, Helvetica, sans-serif; /* Reset font to standard system fonts */
+        }
         .loginForm input[type="submit"] {
             width: 100%;
             padding: 10px;
